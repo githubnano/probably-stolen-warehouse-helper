@@ -2,7 +2,7 @@
 
 适用于 **Probably Stolen Demo** 的 MelonLoader mod。把仓库里的重复操作交给一个用零件拼出来的小助手。
 
-当前版本：**0.1.35**。使用游戏 **0.46D / IL2CPP / Windows x64**、MelonLoader **0.7.3** 和 .NET **6** 的接口编译。其他游戏版本的兼容性尚未确认。当前版本编译通过，游戏内验证由玩家进行。
+当前版本：**0.1.36**。使用游戏 **0.46D / IL2CPP / Windows x64**、MelonLoader **0.7.3** 和 .NET **6** 的接口编译。其他游戏版本的兼容性尚未确认。当前版本编译通过，已由玩家进行游戏内测试。
 
 [English](README.en.md) · [更新记录](CHANGELOG.md) · [Releases](https://github.com/githubnano/probably-stolen-warehouse-helper/releases)
 

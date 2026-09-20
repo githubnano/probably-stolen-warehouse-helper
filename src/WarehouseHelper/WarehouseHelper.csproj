@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>WarehouseHelper</AssemblyName>
-    <Version>0.1.35</Version>
+    <Version>0.1.36</Version>
     <RootNamespace>WarehouseHelper</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>

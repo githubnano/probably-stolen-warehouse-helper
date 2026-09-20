@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.36
+
+- 材料齐全后，助手在零件堆原位置生成，保留朝向，不再额外寻找空位。
+- 移除空间不足时每两秒创建、销毁助手的后台重试；失败时恢复零件堆和材料进度，再次拖入所需材料可重试且不重复消耗。
+- 删除早期助手尺寸迁移、旧说明书清理和旧残次品自动扫描。
+- 移除测试用 F10 发材料快捷键。已由玩家进行游戏内测试。
+
+- Assemble helpers in the parts pile's original position and orientation without requiring extra space.
+- Remove recurring creation/destruction retries. Failed replacements restore the pile and progress; dragging a required material onto a completed pile retries without consuming it.
+- Remove obsolete saved-shape migration, retired-manual cleanup, and legacy broken-item scans.
+- Remove the temporary F10 material shortcut. In-game testing performed by the player.
+
 ## 0.1.35
 
 首次发布 / Initial release.

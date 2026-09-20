@@ -2,7 +2,7 @@
 
 A MelonLoader mod for **Probably Stolen Demo**. Turn salvaged parts into a warehouse helper and assign repetitive item actions to hotkeys.
 
-Version **0.1.35**, compiled against **game 0.46D / IL2CPP / Windows x64**, **MelonLoader 0.7.3**, and **.NET 6**. Compatibility with other game versions is unconfirmed. Compilation has passed; in-game verification is performed by players.
+Version **0.1.36**, compiled against **game 0.46D / IL2CPP / Windows x64**, **MelonLoader 0.7.3**, and **.NET 6**. Compatibility with other game versions is unconfirmed. Compilation has passed; in-game testing has been performed by the player.
 
 [中文](README.md) · [Changelog](CHANGELOG.md) · [Releases](https://github.com/githubnano/probably-stolen-warehouse-helper/releases)
 

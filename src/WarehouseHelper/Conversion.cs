@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Il2Cpp;
-using Il2CppInterop.Runtime;
 using MelonLoader;
 
 namespace WarehouseHelper
@@ -13,6 +13,8 @@ namespace WarehouseHelper
     /// </summary>
     public static class Conversion
     {
+        private static readonly HashSet<IntPtr> Pending = new();
+
         public static void SetupPile(GameItem pile)
         {
             // 不再挂任何 Il2Cpp 委托(原生 InvokeAllReduce 会因 interop 委托抛 TargetException)。
@@ -51,7 +53,7 @@ namespace WarehouseHelper
             if (tag == null) return false;
             int need = NeedFor(pile, other.identifier);
             if (need <= 0) return false;
-            return GetTagInt(pile, tag) < need;
+            return IsComplete(pile) || GetTagInt(pile, tag) < need;
         }
 
         private static void Accept(GameItem pile, GameItem material)
@@ -69,6 +71,8 @@ namespace WarehouseHelper
             try
             {
                 if (pile == null || material == null) yield break;
+                // A completed pile can be retried with a crafting material without consuming it.
+                if (IsComplete(pile)) { Transform(pile); yield break; }
                 string matId = material.identifier;
                 int need = NeedFor(pile, matId);
                 int got = GetTagInt(pile, tag);
@@ -101,83 +105,76 @@ namespace WarehouseHelper
 
         private static void Transform(GameItem pile)
         {
-            string helperId = IsAdv(pile) ? Items.HelperAdvId : Items.HelperBasicId;
-            MelonCoroutines.Start(TransformNextFrame(pile, helperId));
+            if (pile == null || !Pending.Add(pile.Pointer)) return;
+            var key = pile.Pointer;
+            try { MelonCoroutines.Start(TransformNextFrame(pile, key)); }
+            catch { Pending.Remove(key); throw; }
         }
 
-        private static IEnumerator TransformNextFrame(GameItem pile, string helperId)
+        private static IEnumerator TransformNextFrame(GameItem pile, IntPtr key)
         {
-            yield return null;
-
             try
             {
-
-
-                GameItem helper = null;
-                try { helper = DirectoryMaster.Item(helperId, true); }
-                catch (Exception e) { WarehouseHelperMod.Err("创建仓库助手失败: " + e); yield break; }
-                if (helper == null) { WarehouseHelperMod.Err("创建仓库助手失败: null"); yield break; }
-
-                if (TryPlaceHelper(pile, helper))
-                {
-                    // TryAccept 已确认新助手能放入，再销毁零件堆。
-                    try { pile.Destroy(); } catch { }
-                    yield break;
-                }
-
-                // 没地方放:材料不白扣,每 2 秒重试直到放下为止
-                WarehouseHelperMod.Warn("仓库助手无处可放,进入自动重试");
-                try { helper.Destroy(); } catch { }
-                MelonCoroutines.Start(TransformRetryLoop(pile, helperId));
+                // Finish the drag callback before touching inventory membership.
+                yield return null;
+                if (pile != null && IsPile(pile) && IsComplete(pile)) ReplaceInPlace(pile);
             }
-            catch (Exception e) { WarehouseHelperMod.Err("改装协程异常: " + e); }
+            finally { Pending.Remove(key); }
         }
 
-        /// <summary>空间不足时的重试:直到助手放下(零件堆销毁)或零件堆不存在为止。</summary>
-        private static IEnumerator TransformRetryLoop(GameItem pile, string helperId)
+        private static void ReplaceInPlace(GameItem pile)
         {
-            while (true)
-            {
-                yield return new UnityEngine.WaitForSeconds(2f);
-                if (pile == null) yield break;
-
-                GameItem helper = null;
-                try { helper = DirectoryMaster.Item(helperId, true); } catch { }
-                if (helper == null) yield break;
-
-                if (TryPlaceHelper(pile, helper))
-                {
-                    try { pile.Destroy(); } catch { }
-
-                    yield break;
-                }
-                try { helper.Destroy(); } catch { }
-            }
-        }
-
-        /// <summary>优先放零件堆所在容器,满了兜底背包。</summary>
-        private static bool TryPlaceHelper(GameItem pile, GameItem helper)
-        {
-            bool placed = false;
+            GameItem helper = null;
+            GameInventory parent = null;
+            GridShape originalShape = null;
+            bool committed = false;
             try
             {
-                var parent = pile.parentInventory;
-                if (parent != null)
-                    placed = GraphUtils.TryAccept(parent.Cast<GraphNodeStorage>(), helper) > 0;
-            }
-            catch (Exception e) { WarehouseHelperMod.Warn("助手入位异常: " + e.Message); }
+                parent = pile.parentInventory;
+                if (parent == null || pile.modifiedShape == null || pile.unitCount != 1
+                    || !pile.MayRemove() || pile.MaxNumRemove() < 1) return;
+                originalShape = new GridShapeBuilder(pile.modifiedShape).Build();
+                helper = DirectoryMaster.Item(IsAdv(pile) ? Items.HelperAdvId : Items.HelperBasicId, true);
+                if (helper == null || helper.modifiedShape == null || helper.unitCount != 1)
+                    throw new InvalidOperationException("创建仓库助手失败");
 
-            if (!placed)
-            {
-                try
-                {
-                    var entries = UnityEngine.Object.FindObjectsOfType<EmporiumEntry>();
-                    if (entries != null && entries.Length > 0 && entries[0].backInvinvElement != null)
-                        placed = GraphUtils.TryAccept(entries[0].backInvinvElement.Cast<GraphNodeStorage>(), helper) > 0;
-                }
-                catch (Exception e) { WarehouseHelperMod.Warn("助手入位(背包)异常: " + e.Message); }
+                // Reuse the original cells, rotation and flip. Never destroy the pile to make room.
+                var placedShape = new GridShapeBuilder(helper.modifiedShape).SetTransform(originalShape).Build();
+                if (!parent.Expel(pile)) return;
+                var slot = parent.TryInventorySlot(helper, 1, placedShape, helper.modifiedState);
+                if (slot == null || slot.targetItem != null || slot.numTransfer < 1) return;
+                if (slot.TryAcceptOnce(1) != 1 || helper.parentInventory != parent) return;
+                committed = true;
+                pile.Destroy();
             }
-            return placed;
+            catch (Exception e) { WarehouseHelperMod.Err("原位改装: " + e); }
+            finally
+            {
+                if (!committed)
+                {
+                    // Roll back synchronously, including native calls that throw after changing membership.
+                    try
+                    {
+                        if (helper != null)
+                        {
+                            if (helper.parentInventory != null) helper.parentInventory.Expel(helper);
+                            helper.Destroy();
+                        }
+                    }
+                    catch (Exception e) { WarehouseHelperMod.Err("清理未完成助手: " + e); }
+                    try
+                    {
+                        if (parent != null && originalShape != null && pile.parentInventory == null)
+                        {
+                            pile.modifiedShape = originalShape;
+                            // Restore the existing item without reapplying new-item acceptance filters.
+                            if (!parent.UncheckedAccept(pile))
+                                WarehouseHelperMod.Err("改装回退失败: 无法恢复零件堆");
+                        }
+                    }
+                    catch (Exception e) { WarehouseHelperMod.Err("恢复零件堆: " + e); }
+                }
+            }
         }
 
         /// <summary>原生 tooltip 追加改装进度(冰箱式)。</summary>
