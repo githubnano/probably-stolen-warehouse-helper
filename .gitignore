@@ -1,0 +1,36 @@
+# Build output and local editor state
+**/bin/
+**/obj/
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.pdb
+*.log
+.env
+.env.*
+
+# Compiled releases are published separately on GitHub Releases.
+*.dll
+artifacts/
+dist/
+*.exe
+*.zip
+*.7z
+*.unitypackage
+
+# Game files, dependencies, saves, development dumps and other mods
+Probably Stolen_Data/
+MelonLoader/
+UserData/
+UserLibs/
+Mods/
+Plugins/
+ModDev/
+_art_extraction/
+analysis/
+backup/
+refmods/
+sdk/
+saves/
