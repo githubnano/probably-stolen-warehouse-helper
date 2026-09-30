@@ -99,6 +99,10 @@ namespace WarehouseHelper
             CheckId(ids, "垃圾", Config.IdJunk.Value);
             CheckId(ids, "电路板", Config.IdCircuit.Value);
             CheckId(ids, "废金属", Config.IdScrap.Value);
+            CheckId(ids, "充电器", Config.IdRecharger.Value);
+            var bays = (Config.IdSmugglerBays.Value ?? "").Split(',');
+            if (bays.Length > 0) CheckId(ids, "走私者暗格", bays[0].Trim());
+            CheckId(ids, "垃圾桶", Config.IdTrashcan.Value);
         }
 
         private static void CheckId(HashSet<string> ids, string label, string id)

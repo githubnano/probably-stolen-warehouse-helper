@@ -1,4 +1,5 @@
 using MelonLoader;
+using System;
 using System.Collections.Generic;
 
 namespace WarehouseHelper
@@ -39,6 +40,11 @@ namespace WarehouseHelper
 
         public static MelonPreferences_Entry<string> HotkeyModifier; // None/Shift/Ctrl/Alt
 
+        public static MelonPreferences_Entry<string> IdRecharger;
+        public static MelonPreferences_Entry<string> IdSmugglerBays;
+        public static MelonPreferences_Entry<string> IdTrashcan;
+        public static MelonPreferences_Entry<int> ChargerAutoSwap; // 0关 1普通 2大容量优先
+
         public static void Init()
         {
             Cat = MelonPreferences.CreateCategory("WarehouseHelper", I18n.T("mod.name"));
@@ -63,6 +69,19 @@ namespace WarehouseHelper
             AdvNeedCircuit = Setting("adv_need_circuit", 4, "config.advanced_circuit");
 
             HotkeyModifier = Setting("hotkey_modifier", "Alt", "config.modifier");
+
+            IdRecharger = Setting("id_recharger", "recharger", "config.recharger");
+            IdSmugglerBays = Setting("id_smuggler_bays", "smuggler_bay,smuggler_bay_mini,smuggler_bay_mod,smuggler_bay_large", "config.smuggler_bays");
+            IdTrashcan = Setting("id_trashcan", "trashcan", "config.trashcan");
+            ChargerAutoSwap = Setting("charger_auto_swap", 0, "config.charger_auto");
+        }
+
+        public static bool IsSmugglerBayId(string id)
+        {
+            if (id == null) return false;
+            foreach (var part in (IdSmugglerBays.Value ?? "").Split(','))
+                if (string.Equals(part.Trim(), id, StringComparison.OrdinalIgnoreCase)) return true;
+            return false;
         }
 
         public static bool ModifierHeld()

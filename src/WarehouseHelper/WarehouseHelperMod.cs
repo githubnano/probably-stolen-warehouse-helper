@@ -1,7 +1,7 @@
 using MelonLoader;
 using WarehouseHelper;
 
-[assembly: MelonInfo(typeof(WarehouseHelperMod), "WarehouseHelper", "0.1.36", "Kimi")]
+[assembly: MelonInfo(typeof(WarehouseHelperMod), "WarehouseHelper", "0.2.0", "Kimi")]
 [assembly: MelonGame("Questing Goose Studio", "Probably Stolen")]
 
 namespace WarehouseHelper
@@ -16,7 +16,7 @@ namespace WarehouseHelper
             Config.Init();
             Sprites.Load();
             HelperLogic.Init();
-            Log("WarehouseHelper 0.1.36 loaded");
+            Log("WarehouseHelper 0.2.0 loaded");
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)

@@ -36,7 +36,12 @@ namespace WarehouseHelper
         public static bool IsHelper(GameItem i)
             => i != null && (i.identifier == Items.HelperBasicId || i.identifier == Items.HelperAdvId);
 
-        public static void Init() { }
+        public static void Init()
+        {
+            // 睡醒结算后的电池勤务:走游戏官方 ModHook 事件
+            try { ModHook.add_OnWakingUpLate((Il2CppSystem.Action)(System.Action)BatteryWork.OnWakeUp); }
+            catch (Exception e) { WarehouseHelperMod.Err("ModHook 订阅失败: " + e); }
+        }
 
         private static Il2CppSystem.Func<GameItem, bool> F1(System.Func<GameItem, bool> f)
             => (Il2CppSystem.Func<GameItem, bool>)f;
@@ -167,11 +172,13 @@ namespace WarehouseHelper
             BatchUseController.Reset();
             MoveController.Reset();
             BindWindow.Reset();
+            StashWork.Reset();
         }
 
         public static void Tick()
         {
             MoveController.Tick();
+            RedMark.Tick();
             if (BindWindow.IsOpen || NativeMenu.BlocksGameInput || MoveController.BlocksHotkeys || !Config.ModifierHeld()) return;
             for (int i = 0; i < SlotCount; i++)
                 if (HelperHotkeys.NumberDown(i))
