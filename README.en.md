@@ -35,11 +35,11 @@ Use a screwdriver on a module extractor to dismantle it into a parts pile. Drag 
 
 ## Right-click menu
 
-Right-clicking a recharger, a battery-powered machine (fridge, projector, etc.), or a smuggler bay opens the helper's extended menu; native actions (open, unload, etc.) remain listed below.
+These chores belong to the **warehouse helper**: at least one helper (basic or advanced) must exist in the scene for them to run. Right-click the **helper** to open its control panel, or right-click the charger / machine / smuggler bay itself — both edit the same shared state.
 
-- **Recharger auto swap**: right-click any recharger to cycle the mode (off / normal / large-capacity first). While enabled, every morning after sleeping (as long as the power stayed on and batteries actually charged), every recharger is visited and its full batteries are swapped for partially charged ones from storage — each full battery takes the replacement's old spot. Batteries inside trash cans are never used.
-- **Machine auto swap**: right-click a battery-powered machine to enable it per machine. The battery is checked after every run (manual use during the day, or the nightly processing); if it cannot power the next run, a replacement is installed automatically, preferring fully charged ones. The toggle appears in the item description and persists in saves. You are notified once if no battery is available.
-- **One-click stash**: move every piece of contraband (highest level first) and stolen goods (highest price first) not already inside a smuggler bay into the bays. If space runs out, the leftover count is reported and those items are marked red — containers holding them are marked too, so you can find them without opening every box. Right-click **Put back** afterwards to return everything to its recorded place and clear the marks (records reset on scene change).
+- **Recharger auto swap**: cycle the mode (off / normal / large-capacity first). Each morning after sleeping (only while the power stayed on and batteries actually charged), every recharger swaps its full batteries for partially charged ones; each full battery lands where its replacement was. Batteries inside trash cans are never used.
+- **Machine auto swap**: a global toggle. While enabled, every battery-powered machine is checked after each run (manual use or nightly processing); if it cannot power the next run, a replacement is installed automatically, preferring fully charged ones. You are notified once if no battery is available.
+- **One-click stash**: move every piece of contraband (highest level first) and stolen goods (highest price first) not already inside a smuggler bay into the bays (mini / normal / modded / expanded all count). If space runs out, the leftover count is reported and those items are marked red — containers holding them are marked too, so you can find them without opening every box. Use **Put back** afterwards to return everything to its recorded place and clear the marks (records reset on scene change).
 
 ## Language and configuration
 

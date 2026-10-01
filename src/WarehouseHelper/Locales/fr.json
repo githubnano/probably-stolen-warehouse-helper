@@ -42,14 +42,11 @@
   "config.advanced_scrap": "Assemblage avancé : ferraille nécessaire",
   "config.advanced_circuit": "Assemblage avancé : composants électroniques nécessaires",
   "config.modifier": "Touche modificatrice : None/Shift/Ctrl/Alt (par défaut : Alt+chiffre ; raccourcis distincts de ceux de la boîte à outils)",
-  "menu.auto_battery_on": "Remplacement auto. : OUI",
-  "menu.auto_battery_off": "Remplacement auto. : NON",
   "menu.stash_all": "Cacher contrebande et objets volés",
   "menu.stash_restore": "Remettre les objets cachés en place",
   "battery.swapped": "{0} batteries pleines remplacées",
   "battery.auto_on": "Remplacement auto. activé (pleines d'abord)",
   "battery.auto_off": "Remplacement auto. désactivé",
-  "battery.tooltip": "Remplace la batterie déchargée",
   "battery.machine_swapped": "{0} : {1} installée",
   "battery.machine_none": "{0} : aucune batterie utilisable",
   "stash.no_bay": "Aucune cache de contrebandier trouvée",
@@ -66,5 +63,9 @@
   "charger.mode_0": "NON",
   "charger.mode_1": "Normal",
   "charger.mode_2": "Grandes d'abord",
-  "config.charger_auto": "Échange auto. chargeurs : 0=non 1=normal 2=grandes d'abord (après le sommeil)"
+  "config.charger_auto": "Échange auto. chargeurs : 0=non 1=normal 2=grandes d'abord (après le sommeil)",
+  "menu.machine_auto_on": "Échange auto. sur machines : OUI",
+  "menu.machine_auto_off": "Échange auto. sur machines : NON",
+  "helper.required": "Pas d'assistant d'entrepôt pour faire le travail",
+  "config.machine_auto": "Échange auto. machines (global, assistant requis)"
 }

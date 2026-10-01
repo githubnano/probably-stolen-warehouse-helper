@@ -42,14 +42,11 @@
   "config.advanced_scrap": "Assemblaggio avanzato: rottami metallici necessari",
   "config.advanced_circuit": "Assemblaggio avanzato: componenti elettronici necessari",
   "config.modifier": "Tasto modificatore: None/Shift/Ctrl/Alt (predefinito: Alt+numero; separato dai tasti della cassetta degli attrezzi)",
-  "menu.auto_battery_on": "Sostituzione auto.: SÌ",
-  "menu.auto_battery_off": "Sostituzione auto.: NO",
   "menu.stash_all": "Nascondi contrabbando e refurtiva",
   "menu.stash_restore": "Rimetti gli oggetti nascosti al posto",
   "battery.swapped": "{0} batterie cariche sostituite",
   "battery.auto_on": "Sostituzione automatica attivata (cariche prima)",
   "battery.auto_off": "Sostituzione automatica disattivata",
-  "battery.tooltip": "Sostituisce la batteria esaurita",
   "battery.machine_swapped": "{0}: installata {1}",
   "battery.machine_none": "{0}: nessuna batteria utilizzabile",
   "stash.no_bay": "Nessun vano del contrabbandiere trovato",
@@ -66,5 +63,9 @@
   "charger.mode_0": "NO",
   "charger.mode_1": "Normale",
   "charger.mode_2": "Grandi prima",
-  "config.charger_auto": "Sostituzione auto. caricatori: 0=no 1=normale 2=grandi prima (dopo il sonno)"
+  "config.charger_auto": "Sostituzione auto. caricatori: 0=no 1=normale 2=grandi prima (dopo il sonno)",
+  "menu.machine_auto_on": "Sostituzione auto. macchine: SÌ",
+  "menu.machine_auto_off": "Sostituzione auto. macchine: NO",
+  "helper.required": "Nessun aiutante di magazzino per fare il lavoro",
+  "config.machine_auto": "Sostituzione auto. macchine (globale, richiede aiutante)"
 }

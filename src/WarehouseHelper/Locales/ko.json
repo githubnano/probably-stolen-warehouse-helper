@@ -42,14 +42,11 @@
   "config.advanced_scrap": "고급형 조립: 필요한 고철 수",
   "config.advanced_circuit": "고급형 조립: 필요한 전자 부품 수",
   "config.modifier": "보조 키: None/Shift/Ctrl/Alt (기본값: Alt+숫자, 도구 상자 단축키와 별도)",
-  "menu.auto_battery_on": "배터리 자동 교체: 켜짐",
-  "menu.auto_battery_off": "배터리 자동 교체: 꺼짐",
   "menu.stash_all": "밀수품·장물 모두 숨기기",
   "menu.stash_restore": "숨긴 물건 제자리에 놓기",
   "battery.swapped": "완충 배터리 {0}개를 교체했습니다",
   "battery.auto_on": "배터리 자동 교체 켜짐(완충 우선)",
   "battery.auto_off": "배터리 자동 교체 꺼짐",
-  "battery.tooltip": "방전된 배터리를 자동으로 교체합니다",
   "battery.machine_swapped": "{0}:{1} 장착됨",
   "battery.machine_none": "{0}: 사용 가능한 배터리가 없습니다",
   "stash.no_bay": "밀수업자 은닉함을 찾을 수 없습니다",
@@ -66,5 +63,9 @@
   "charger.mode_0": "꺼짐",
   "charger.mode_1": "일반",
   "charger.mode_2": "대용량 우선",
-  "config.charger_auto": "충전기 자동 교체: 0=꺼짐 1=일반 2=대용량 우선(수면 후)"
+  "config.charger_auto": "충전기 자동 교체: 0=꺼짐 1=일반 2=대용량 우선(수면 후)",
+  "menu.machine_auto_on": "기계 배터리 자동 교체: 켜짐",
+  "menu.machine_auto_off": "기계 배터리 자동 교체: 꺼짐",
+  "helper.required": "창고 도우미가 없어 작업할 수 없습니다",
+  "config.machine_auto": "기계 배터리 자동 교체(전역, 창고 도우미 필요)"
 }

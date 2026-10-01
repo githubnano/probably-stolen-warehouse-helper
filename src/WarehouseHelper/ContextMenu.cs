@@ -19,9 +19,28 @@ namespace WarehouseHelper
             var labels = new List<string>();
             var runs = new List<Action>();
 
+            // 这三个是仓库助手的功能:右键助手打开功能面板
+            if (HelperLogic.IsHelper(item))
+            {
+                labels.Add(I18n.F("menu.charger_auto", I18n.T("charger.mode_" + BatteryWork.ChargerMode)));
+                runs.Add(() =>
+                {
+                    int mode = BatteryWork.CycleChargerMode();
+                    Notice.Show(I18n.F("menu.charger_auto", I18n.T("charger.mode_" + mode)));
+                });
+                labels.Add(I18n.T(Config.MachineAutoSwap?.Value == true ? "menu.machine_auto_on" : "menu.machine_auto_off"));
+                runs.Add(() => BatteryWork.ToggleAutoSwap(null));
+                labels.Add(I18n.T("menu.stash_all"));
+                runs.Add(StashWork.TransferAll);
+                if (StashWork.HasRecord)
+                {
+                    labels.Add(I18n.T("menu.stash_restore"));
+                    runs.Add(StashWork.RestoreAll);
+                }
+            }
             if (BatteryWork.IsCharger(item))
             {
-                // 全局自动化开关(0关/1普通/2大容量优先),点击循环;睡觉结算后对所有充电器生效
+                // 充电器上的快捷入口:同一个全局开关(0关/1普通/2大容量优先)
                 labels.Add(I18n.F("menu.charger_auto", I18n.T("charger.mode_" + BatteryWork.ChargerMode)));
                 runs.Add(() =>
                 {
@@ -31,9 +50,8 @@ namespace WarehouseHelper
             }
             if (BatteryWork.HasBatterySlot(item))
             {
-                var machine = item;
-                labels.Add(I18n.T(BatteryWork.IsAutoSwap(machine) ? "menu.auto_battery_on" : "menu.auto_battery_off"));
-                runs.Add(() => BatteryWork.ToggleAutoSwap(machine));
+                labels.Add(I18n.T(Config.MachineAutoSwap?.Value == true ? "menu.machine_auto_on" : "menu.machine_auto_off"));
+                runs.Add(() => BatteryWork.ToggleAutoSwap(null));
             }
             if (StashWork.IsBay(item))
             {

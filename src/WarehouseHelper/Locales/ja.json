@@ -42,14 +42,11 @@
   "config.advanced_scrap": "上位型の組み立て：必要な金属くずの数",
   "config.advanced_circuit": "上位型の組み立て：必要な電子部品の数",
   "config.modifier": "修飾キー：None/Shift/Ctrl/Alt（初期設定：Alt+数字。ツールボックスのキーとは別）",
-  "menu.auto_battery_on": "バッテリー自動交換: オン",
-  "menu.auto_battery_off": "バッテリー自動交換: オフ",
   "menu.stash_all": "禁制品と盗品をすべて隠す",
   "menu.stash_restore": "隠したアイテムを元に戻す",
   "battery.swapped": "満充電バッテリー {0} 個を交換しました",
   "battery.auto_on": "バッテリー自動交換を有効化(満充電優先)",
   "battery.auto_off": "バッテリー自動交換を無効化",
-  "battery.tooltip": "消耗したバッテリーを自動交換します",
   "battery.machine_swapped": "{0}:{1} を装着しました",
   "battery.machine_none": "{0}:使用可能なバッテリーがありません",
   "stash.no_bay": "密輸業者の隠し棚が見つかりません",
@@ -66,5 +63,9 @@
   "charger.mode_0": "オフ",
   "charger.mode_1": "通常",
   "charger.mode_2": "大容量優先",
-  "config.charger_auto": "充電器の自動交換: 0=オフ 1=通常 2=大容量優先(睡眠後に有効)"
+  "config.charger_auto": "充電器の自動交換: 0=オフ 1=通常 2=大容量優先(睡眠後に有効)",
+  "menu.machine_auto_on": "機械のバッテリー自動交換: オン",
+  "menu.machine_auto_off": "機械のバッテリー自動交換: オフ",
+  "helper.required": "倉庫ヘルパーがいないため作業できません",
+  "config.machine_auto": "機械のバッテリー自動交換(グローバル、倉庫ヘルパーが必要)"
 }

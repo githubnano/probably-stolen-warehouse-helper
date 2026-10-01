@@ -42,14 +42,11 @@
   "config.advanced_scrap": "Montaje avanzado: chatarra necesaria",
   "config.advanced_circuit": "Montaje avanzado: componentes electrónicos necesarios",
   "config.modifier": "Tecla modificadora: None/Shift/Ctrl/Alt (predeterminado: Alt+número; separado de los atajos de la caja de herramientas)",
-  "menu.auto_battery_on": "Cambio auto. de batería: SÍ",
-  "menu.auto_battery_off": "Cambio auto. de batería: NO",
   "menu.stash_all": "Ocultar contrabando y robados",
   "menu.stash_restore": "Devolver lo ocultado a su sitio",
   "battery.swapped": "{0} baterías cargadas sustituidas",
   "battery.auto_on": "Cambio automático activado (cargadas primero)",
   "battery.auto_off": "Cambio automático desactivado",
-  "battery.tooltip": "Sustituye la batería agotada",
   "battery.machine_swapped": "{0}: instalada {1}",
   "battery.machine_none": "{0}: no se encontró batería usable",
   "stash.no_bay": "No se encontró compartimento de contrabando",
@@ -66,5 +63,9 @@
   "charger.mode_0": "NO",
   "charger.mode_1": "Normal",
   "charger.mode_2": "Grandes primero",
-  "config.charger_auto": "Cambio auto. en cargadores: 0=no 1=normal 2=grandes primero (tras dormir)"
+  "config.charger_auto": "Cambio auto. en cargadores: 0=no 1=normal 2=grandes primero (tras dormir)",
+  "menu.machine_auto_on": "Cambio auto. en máquinas: SÍ",
+  "menu.machine_auto_off": "Cambio auto. en máquinas: NO",
+  "helper.required": "No hay ayudante de almacén para hacer el trabajo",
+  "config.machine_auto": "Cambio auto. en máquinas (global, requiere ayudante)"
 }

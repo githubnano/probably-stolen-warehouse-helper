@@ -44,6 +44,7 @@ namespace WarehouseHelper
         public static MelonPreferences_Entry<string> IdSmugglerBays;
         public static MelonPreferences_Entry<string> IdTrashcan;
         public static MelonPreferences_Entry<int> ChargerAutoSwap; // 0关 1普通 2大容量优先
+        public static MelonPreferences_Entry<bool> MachineAutoSwap; // 机器自动换电池全局开关
 
         public static void Init()
         {
@@ -74,6 +75,7 @@ namespace WarehouseHelper
             IdSmugglerBays = Setting("id_smuggler_bays", "smuggler_bay,smuggler_bay_mini,smuggler_bay_mod,smuggler_bay_large", "config.smuggler_bays");
             IdTrashcan = Setting("id_trashcan", "trashcan", "config.trashcan");
             ChargerAutoSwap = Setting("charger_auto_swap", 0, "config.charger_auto");
+            MachineAutoSwap = Setting("machine_auto_swap", false, "config.machine_auto");
         }
 
         public static bool IsSmugglerBayId(string id)

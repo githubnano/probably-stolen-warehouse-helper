@@ -18,12 +18,24 @@ namespace WarehouseHelper
     /// </summary>
     public static class BatteryWork
     {
-        public const string TagAuto = "wh_ab";
-
         // ---------- 判定 ----------
 
         public static bool IsCharger(GameItem item)
             => item != null && item.identifier == Config.IdRecharger.Value;
+
+        /// <summary>仓库助手在场才干活(这三个是助手的功能;场景里至少要有一只基础/进阶助手)。</summary>
+        public static bool HelperPresent() => HelperLogic.FindHelpers().Count > 0;
+
+        /// <summary>机器自动换电池全局开关(配置持久化;右键助手或机器切换)。</summary>
+        public static bool IsAutoSwap(GameItem machine) => Config.MachineAutoSwap?.Value == true;
+
+        /// <summary>机器自动换电池全局开关切换。</summary>
+        public static void ToggleAutoSwap(GameItem machine)
+        {
+            bool next = !(Config.MachineAutoSwap?.Value ?? false);
+            Config.MachineAutoSwap.Value = next;
+            Notice.Show(I18n.T(next ? "battery.auto_on" : "battery.auto_off"));
+        }
 
         /// <summary>是不是电池:原生电源标签 power_source_item(energy_credit/energy_credit_ext 等电池都有;
         /// powerblock 之类的供电机器没有此标签,天然排除)。</summary>
@@ -40,9 +52,6 @@ namespace WarehouseHelper
             try { return MachineHelper.GetBatterySlot(item) != null; }
             catch { return false; }
         }
-
-        public static bool IsAutoSwap(GameItem machine)
-            => Conversion.GetTagInt(machine, TagAuto) == 1;
 
         public static int EnergyOf(GameItem battery)
         {
@@ -136,14 +145,21 @@ namespace WarehouseHelper
 
         /// <summary>睡醒点(ModHook.OnWakingUpLate)调用,这是主通道:
         /// 电池是白天实时慢慢充的,睡一觉起来该满的都满了;供电正常(isPowerOn)说明夜里确实充上了电。
-        /// 然后机器夜里也都运行过一轮,逐台检查开了自动换电池的机器。</summary>
+        /// 然后机器夜里也都运行过一轮,逐台检查带电池槽的机器(全局开关)。
+        /// 这些都是仓库助手的活:场景里没有助手就不干,开了自动化会提醒一次。</summary>
         public static void OnWakeUp()
         {
             try
             {
+                if (!HelperPresent())
+                {
+                    if (ChargerMode != 0 || IsAutoSwap(null)) Notice.Show(I18n.T("helper.required"));
+                    return;
+                }
                 if (IsPowerOn() && ChargerMode != 0) SwapAllChargers();
-                foreach (var machine in FindAll(i => IsAutoSwap(i)))
-                    TryReplaceMachineBattery(machine);
+                if (IsAutoSwap(null))
+                    foreach (var machine in FindAll(i => HasBatterySlot(i)))
+                        TryReplaceMachineBattery(machine);
             }
             catch (Exception e) { WarehouseHelperMod.Err("睡醒电池勤务: " + e); }
         }
@@ -178,7 +194,7 @@ namespace WarehouseHelper
             {
                 try
                 {
-                    if (ChargerMode != 0 && IsPowerOn()) SwapAllChargers();
+                    if (ChargerMode != 0 && IsPowerOn() && HelperPresent()) SwapAllChargers();
                 }
                 catch (Exception e) { WarehouseHelperMod.Err("充完电换电池: " + e); }
             }
@@ -272,32 +288,15 @@ namespace WarehouseHelper
             catch (Exception e) { WarehouseHelperMod.Warn("回滚归位: " + e.Message); }
         }
 
-        // ---------- 功能 2:机器低电自动换电池 ----------
-
-        public static void ToggleAutoSwap(GameItem machine)
-        {
-            bool next = !IsAutoSwap(machine);
-            Conversion.SetTagInt(machine, TagAuto, next ? 1 : 0);
-            Notice.Show(I18n.T(next ? "battery.auto_on" : "battery.auto_off"));
-        }
-
-        /// <summary>tooltip 末尾追加开关状态。</summary>
-        public static void AppendTooltip(RichTextBuilder builder, GameItem item)
-        {
-            try
-            {
-                if (!IsAutoSwap(item) || !HasBatterySlot(item)) return;
-                TooltipTail.Line(builder, I18n.T("battery.tooltip"), bold: true);
-            }
-            catch { }
-        }
+        // ---------- 功能 2:机器低电自动换电池(全局开关,仓库助手在场才执行) ----------
 
         /// <summary>机器每运行一次就检查一次(两个原生钩子 + 睡醒巡检都进这里)。</summary>
         public static void OnMachineRan(GameItem machine)
         {
             try
             {
-                if (IsAutoSwap(machine)) TryReplaceMachineBattery(machine);
+                if (!HelperPresent() || !IsAutoSwap(machine)) return;
+                TryReplaceMachineBattery(machine);
             }
             catch (Exception e) { WarehouseHelperMod.Warn("机器换电池检查: " + e.Message); }
         }

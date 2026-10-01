@@ -42,14 +42,11 @@
   "config.advanced_scrap": "Verbesserte Montage: benötigter Metallschrott",
   "config.advanced_circuit": "Verbesserte Montage: benötigte elektronische Bauteile",
   "config.modifier": "Zusatztaste: None/Shift/Ctrl/Alt (Standard: Alt+Zahl; getrennt von den Werkzeugkasten-Tasten)",
-  "menu.auto_battery_on": "Auto-Akkutausch: AN",
-  "menu.auto_battery_off": "Auto-Akkutausch: AUS",
   "menu.stash_all": "Schmuggelware & Hehlerware verstecken",
   "menu.stash_restore": "Verstecktes zurücklegen",
   "battery.swapped": "{0} volle Akkus ausgetauscht",
   "battery.auto_on": "Auto-Akkutausch aktiviert (volle zuerst)",
   "battery.auto_off": "Auto-Akkutausch deaktiviert",
-  "battery.tooltip": "Tauscht leere Akkus automatisch",
   "battery.machine_swapped": "{0}: {1} eingesetzt",
   "battery.machine_none": "{0}: kein brauchbarer Akku gefunden",
   "stash.no_bay": "Kein Schmugglerversteck gefunden",
@@ -66,5 +63,9 @@
   "charger.mode_0": "AUS",
   "charger.mode_1": "Normal",
   "charger.mode_2": "Große zuerst",
-  "config.charger_auto": "Ladegerät Auto-Akkutausch: 0=aus 1=normal 2=große zuerst (nach dem Schlaf)"
+  "config.charger_auto": "Ladegerät Auto-Akkutausch: 0=aus 1=normal 2=große zuerst (nach dem Schlaf)",
+  "menu.machine_auto_on": "Auto-Akkutausch an Maschinen: AN",
+  "menu.machine_auto_off": "Auto-Akkutausch an Maschinen: AUS",
+  "helper.required": "Kein Lagerhelfer vor Ort für diese Arbeit",
+  "config.machine_auto": "Maschinen-Auto-Akkutausch (global, Lagerhelfer nötig)"
 }

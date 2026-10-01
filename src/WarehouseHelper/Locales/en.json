@@ -42,14 +42,11 @@
   "config.advanced_scrap": "Advanced assembly: scrap metal required",
   "config.advanced_circuit": "Advanced assembly: electronic components required",
   "config.modifier": "Helper hotkey modifier: None/Shift/Ctrl/Alt (default: Alt+number; keeps toolbox shortcuts separate)",
-  "menu.auto_battery_on": "Auto battery swap: ON",
-  "menu.auto_battery_off": "Auto battery swap: OFF",
   "menu.stash_all": "Stash all contraband & stolen goods",
   "menu.stash_restore": "Put stashed items back",
   "battery.swapped": "Swapped out {0} full batteries",
   "battery.auto_on": "Auto battery swap enabled (full charge first)",
   "battery.auto_off": "Auto battery swap disabled",
-  "battery.tooltip": "Auto-replaces a depleted battery",
   "battery.machine_swapped": "{0}: installed {1}",
   "battery.machine_none": "{0}: no usable battery found",
   "stash.no_bay": "No smuggler bay found",
@@ -66,5 +63,9 @@
   "charger.mode_0": "OFF",
   "charger.mode_1": "Normal",
   "charger.mode_2": "Large first",
-  "config.charger_auto": "Charger auto battery swap: 0=off 1=normal 2=large first (after sleep)"
+  "config.charger_auto": "Charger auto battery swap: 0=off 1=normal 2=large first (after sleep)",
+  "menu.machine_auto_on": "Machine auto battery swap: ON",
+  "menu.machine_auto_off": "Machine auto battery swap: OFF",
+  "helper.required": "No warehouse helper around to do the chores",
+  "config.machine_auto": "Machine auto battery swap (global, needs a warehouse helper present)"
 }

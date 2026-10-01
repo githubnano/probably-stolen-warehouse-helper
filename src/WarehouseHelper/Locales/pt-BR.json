@@ -42,14 +42,11 @@
   "config.advanced_scrap": "Montagem avançada: sucata de metal necessária",
   "config.advanced_circuit": "Montagem avançada: componentes eletrônicos necessários",
   "config.modifier": "Tecla modificadora: None/Shift/Ctrl/Alt (padrão: Alt+número; separado dos atalhos da caixa de ferramentas)",
-  "menu.auto_battery_on": "Troca automática: LIG",
-  "menu.auto_battery_off": "Troca automática: DESL",
   "menu.stash_all": "Esconder contrabando e roubados",
   "menu.stash_restore": "Devolver itens escondidos ao lugar",
   "battery.swapped": "{0} baterias cheias trocadas",
   "battery.auto_on": "Troca automática ativada (cheias primeiro)",
   "battery.auto_off": "Troca automática desativada",
-  "battery.tooltip": "Substitui a bateria descarregada",
   "battery.machine_swapped": "{0}: instalada {1}",
   "battery.machine_none": "{0}: nenhuma bateria utilizável",
   "stash.no_bay": "Nenhum compartimento de contrabando encontrado",
@@ -66,5 +63,9 @@
   "charger.mode_0": "DESL",
   "charger.mode_1": "Normal",
   "charger.mode_2": "Grandes primeiro",
-  "config.charger_auto": "Troca automática nos carregadores: 0=desl 1=normal 2=grandes primeiro (após dormir)"
+  "config.charger_auto": "Troca automática nos carregadores: 0=desl 1=normal 2=grandes primeiro (após dormir)",
+  "menu.machine_auto_on": "Troca auto. em máquinas: LIG",
+  "menu.machine_auto_off": "Troca auto. em máquinas: DESL",
+  "helper.required": "Sem ajudante de depósito para fazer o trabalho",
+  "config.machine_auto": "Troca auto. em máquinas (global, requer ajudante)"
 }

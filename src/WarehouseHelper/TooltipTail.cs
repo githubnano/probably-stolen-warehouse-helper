@@ -44,11 +44,7 @@ namespace WarehouseHelper
                     }
                     var def = Items.Find(id); // 自定义物品:各自定义文件里自带 tooltip
                     if (def != null) def.AppendTooltip(__result, __instance);
-                    else
-                    {
-                        HelperLogic.AppendItemBinding(__result, __instance); // 其余物品:显示绑定信息
-                        BatteryWork.AppendTooltip(__result, __instance); // 自动换电池开关状态
-                    }
+                    else HelperLogic.AppendItemBinding(__result, __instance); // 其余物品:显示绑定信息
                 }
                 catch { }
             }

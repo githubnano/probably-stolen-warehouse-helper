@@ -117,6 +117,7 @@ namespace WarehouseHelper
         {
             try
             {
+                if (!BatteryWork.HelperPresent()) { Notice.Show(I18n.T("helper.required")); return; }
                 var bays = FindBays();
                 if (bays.Count == 0) { Notice.Show(I18n.T("stash.no_bay")); return; }
 
