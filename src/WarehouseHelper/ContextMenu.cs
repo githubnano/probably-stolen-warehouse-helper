@@ -6,10 +6,10 @@ using UnityEngine;
 namespace WarehouseHelper
 {
     /// <summary>
-    /// 右键菜单扩展:命中目标物品(充电器 / 带电池槽的机器 / 走私者暗格)时,
-    /// 用 NativeMenu(原生 UI 类型自建菜单)取代原生右键菜单 —— 前面是自定义功能,
-    /// 后面照常列出原生可用动作(打开/使用/激活/切换/卸载),不丢原版功能。
-    /// 挂法:patch ItemContextHandler.OnEventPress,命中就 return false 拦掉原生菜单。
+    /// 右键菜单扩展:只在仓库助手上生效——右键助手打开功能面板(充电器换电池模式/
+    /// 机器换电池开关/一键藏匿/放回原位),后面照常列出原生可用动作。
+    /// 其他物品(充电器/机器/暗格等)不加任何自定义入口,原生菜单原样保留。
+    /// 挂法:patch ItemContextHandler.OnEventPress,命中助手就 return false 拦掉原生菜单。
     /// </summary>
     public static class ContextMenu
     {
@@ -19,7 +19,8 @@ namespace WarehouseHelper
             var labels = new List<string>();
             var runs = new List<Action>();
 
-            // 这三个是仓库助手的功能:右键助手打开功能面板
+            // 这三个是仓库助手的功能,入口只在助手上:右键助手打开功能面板。
+            // 充电器/机器/暗格不加任何自定义入口,原生右键菜单原样保留。
             if (HelperLogic.IsHelper(item))
             {
                 labels.Add(I18n.F("menu.charger_auto", I18n.T("charger.mode_" + BatteryWork.ChargerMode)));
@@ -30,31 +31,6 @@ namespace WarehouseHelper
                 });
                 labels.Add(I18n.T(Config.MachineAutoSwap?.Value == true ? "menu.machine_auto_on" : "menu.machine_auto_off"));
                 runs.Add(() => BatteryWork.ToggleAutoSwap(null));
-                labels.Add(I18n.T("menu.stash_all"));
-                runs.Add(StashWork.TransferAll);
-                if (StashWork.HasRecord)
-                {
-                    labels.Add(I18n.T("menu.stash_restore"));
-                    runs.Add(StashWork.RestoreAll);
-                }
-            }
-            if (BatteryWork.IsCharger(item))
-            {
-                // 充电器上的快捷入口:同一个全局开关(0关/1普通/2大容量优先)
-                labels.Add(I18n.F("menu.charger_auto", I18n.T("charger.mode_" + BatteryWork.ChargerMode)));
-                runs.Add(() =>
-                {
-                    int mode = BatteryWork.CycleChargerMode();
-                    Notice.Show(I18n.F("menu.charger_auto", I18n.T("charger.mode_" + mode)));
-                });
-            }
-            if (BatteryWork.HasBatterySlot(item))
-            {
-                labels.Add(I18n.T(Config.MachineAutoSwap?.Value == true ? "menu.machine_auto_on" : "menu.machine_auto_off"));
-                runs.Add(() => BatteryWork.ToggleAutoSwap(null));
-            }
-            if (StashWork.IsBay(item))
-            {
                 labels.Add(I18n.T("menu.stash_all"));
                 runs.Add(StashWork.TransferAll);
                 if (StashWork.HasRecord)
