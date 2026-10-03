@@ -173,6 +173,7 @@ namespace WarehouseHelper
             MoveController.Reset();
             BindWindow.Reset();
             StashWork.Reset();
+            ContextMenu.Reset();
         }
 
         public static void Tick()
